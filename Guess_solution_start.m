@@ -5,7 +5,7 @@ global y_guess;
 
 theta0=pi/2;
 r=1;
-h=25.0;
+h=10.0;
 kappa = 1;
 sigma=1.0;
 l2=1.0;

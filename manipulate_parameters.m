@@ -7,7 +7,7 @@ theta0=3*pi/4;
 r=1.0;
 h=10;
 kappa = 1.0;
-sigma=2.0;
+sigma=1.0;
 l2=0.0;
 
 L = 1;
