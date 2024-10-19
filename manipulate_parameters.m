@@ -7,14 +7,11 @@ theta0=3*pi/4;
 r=1.0;
 h=10;
 kappa = 1.0;
-sigma=4.0;
+sigma=2.0;
 l2=0.0;
 
 L = 1;
-%solinit = bvpinit(linspace(0,1,101),@mat4init,L);
-%sol = bvp4c(@mat4ode, @mat4bc, solinit);
-fprintf('Value of arc-length L %7.3f.\n',...
-            sol.parameters)
+
 
 solinit = bvpinit(linspace(0,1,101),@newguess,L);
 sol = bvp4c(@mat4ode, @mat4bc, solinit);
@@ -24,24 +21,6 @@ Sxint = deval(sol,xint);
 
 t = linspace(0,1,101);
 y_guess = deval(sol,t);
-
-fprintf('Final theta0 %7.3f.\n',...
-            theta0)
-%{
-%plot(xint,Sxint)
-plot(sol.y(5,:),sol.y(4,:))
-%plot(sol.x,sol.y(2,:))
-%axis([0 5 0.4 0.7])
-%title('h=20') 
-title('\psi = \pi/2')
-xlabel('Z')
-ylabel('R')
-%legend('Psi','Phi','Lambda1','R','Z')
-%legend('Z vs R')
-%}
-
-
-
 
 
 %z = 0:0.1:3;
@@ -56,7 +35,7 @@ ccc=(sol.y(2,:) + sin(sol.y(1,:))/sol.y(4,:));
 [~,C] = meshgrid(t,ccc);
 %xx = [0.5*X(:); 0.75*X(:); X(:)];
 %C = 1;
-h = surf(X,Z,Y,C)
+h = surf(X,Z,Y,C);
 set(h, 'EdgeColor', 'none');
 c = colorbar;
 %c.Label.String = 'Mean Curvature';
@@ -80,9 +59,6 @@ ylabel('Z')
 zlabel ('R')
 
 
-
-
-
 function dydx = mat4ode(x,y,L) % equation being solved
 global kappa sigma l2;
 %sigma=1;
@@ -102,18 +78,7 @@ global theta0 r h;
 res = [ya(1) - theta0; yb(1) - pi + theta0; ya(4)-r; yb(4)-r; ya(5); yb(5)-h];
 end
 %-------------------------------------------
-function yinit = mat4init(x) % initial guess function
-global theta0 r h;
-%theta0=pi/2;
-%r=1.0;
-%h=2.0;
-yinit = [x*x-x+theta0;
-         x*x-x+1;
-         -x*2+1;
-         (2.8-4*r)*x*x-(2.8-4*r)*x+r;
-         x];
-end
-%-------------------------------------------
+
 function v = newguess(q)
 global N; 
 global y_guess;

@@ -13,33 +13,12 @@ l2=1.0;
 L = 1;
 solinit = bvpinit(linspace(0,1,101),@mat4init,L);
 sol = bvp4c(@mat4ode, @mat4bc, solinit);
-fprintf('Value of arc-length L %7.3f.\n',...
-            sol.parameters)
-
-%solinit = bvpinit(linspace(0,1,101),@newguess,L);
-%sol = bvp4c(@mat4ode, @mat4bc, solinit);
 
 xint = linspace(0,1);
 Sxint = deval(sol,xint);
 
 t = linspace(0,1,101);
 y_guess = deval(sol,t);
-
-fprintf('Final theta0 %7.3f.\n',...
-            theta0)
-
-%plot(xint,Sxint)
-plot(sol.y(5,:),sol.y(4,:))
-%plot(sol.x,sol.y(2,:))
-%axis([0 5 0.4 0.7])
-%title('h=20') 
-title('\psi = \pi/2')
-xlabel('Z')
-ylabel('R')
-%legend('Psi','Phi','Lambda1','R','Z')
-%legend('Z vs R')
-
-
 
 
 function dydx = mat4ode(x,y,L) % equation being solved
@@ -73,13 +52,4 @@ yinit = [x*x-x+theta0;
          x];
 end
 %-------------------------------------------
-function v = newguess(q)
-global N; 
-global y_guess;
- 
-q = round(q*(N-1));
-v = y_guess(:,q+1);
- 
-end
-%...........................................
-%..........................................
+
